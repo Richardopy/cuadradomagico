@@ -104,7 +104,7 @@ class CadradoMagicoActivity(activity.Activity):
                         'Haz que todos los numeros alineados horizontalmente sumen 15!!!')
         hbox1 = Gtk.HButtonBox()
         hbox1.set_layout(Gtk.ButtonBoxStyle.CENTER)
-        event_box = Gtk.EventBox()	
+        event_box = Gtk.EventBox()  
         self.button1 = Gtk.Button()
         self.button1.set_size_request(150, 150)
         self.button1.modify_bg(Gtk.StateType.NORMAL, 
@@ -177,6 +177,15 @@ class CadradoMagicoActivity(activity.Activity):
 
         jugar.connect("clicked",self.jugar, menu, juego, felicitaciones)
         volver.connect("clicked",self.menu, menu, juego)
+        self.button1.connect("clicked",self.cambiar, nivel, felicitaciones, 'self.button1')
+        self.button2.connect("clicked",self.cambiar, nivel, felicitaciones, 'self.button2')
+        self.button3.connect("clicked",self.cambiar, nivel, felicitaciones, 'self.button3')
+        self.button4.connect("clicked",self.cambiar, nivel, felicitaciones, 'self.button4')
+        self.button5.connect("clicked",self.cambiar, nivel, felicitaciones, 'self.button5')
+        self.button6.connect("clicked",self.cambiar, nivel, felicitaciones, 'self.button6')
+        self.button7.connect("clicked",self.cambiar, nivel, felicitaciones, 'self.button7')
+        self.button8.connect("clicked",self.cambiar, nivel, felicitaciones, 'self.button8')
+        self.button9.connect("clicked",self.cambiar, nivel, felicitaciones, 'self.button9')
 
         self.set_canvas(event_box)
         event_box.add(win)
@@ -214,7 +223,7 @@ class CadradoMagicoActivity(activity.Activity):
         self.x= random.randint(1,9)
         if self.x==1:
             self.a=self.x+5
-            self.b=self.x+3	
+            self.b=self.x+3 
             self.c=self.x+4
             self.d=self.x
             self.e=self.x+7
@@ -231,7 +240,7 @@ class CadradoMagicoActivity(activity.Activity):
             self.button7.set_label(str(self.g))
             self.button8.set_label(str(self.h))
             self.button9.set_label(str(self.i))
-        elif self.x==2:		 
+        elif self.x==2:      
             self.a=self.x-1
             self.b=self.x+3
             self.c=self.x+5
@@ -253,7 +262,7 @@ class CadradoMagicoActivity(activity.Activity):
         elif self.x==3:
             self.a=self.x-1
             self.b=self.x+3
-            self.c=self.x+5	
+            self.c=self.x+5 
             self.d=self.x+4
             self.e=self.x+6
             self.f=self.x-2
@@ -392,3 +401,66 @@ class CadradoMagicoActivity(activity.Activity):
     def menu(self, widget, menu=None, juego=None):
         menu.set_visible(True)
         juego.set_visible(False)
+
+    def cambiar(self, widget, nivel=None, felicitaciones=None ,Data=None):
+        self.click+=1
+        if self.click==1:
+            self.x1=Data
+            self.x2=widget.get_label()
+            widget.modify_bg(Gtk.StateType.NORMAL, style.Color("#F20000").get_gdk_color())
+        else:
+            self.x3=widget.get_label()
+            widget.set_label(self.x2)
+            if self.x1=='self.button1':
+                self.button1.set_label(str(self.x3))
+                self.button1.modify_bg(Gtk.StateType.NORMAL, style.Color("#1CCD16").get_gdk_color())
+            elif self.x1=='self.button2':
+                self.button2.set_label(str(self.x3))
+                self.button2.modify_bg(Gtk.StateType.NORMAL, style.Color("#1CCD16").get_gdk_color())
+            elif self.x1=='self.button3':
+                self.button3.set_label(str(self.x3))
+                self.button3.modify_bg(Gtk.StateType.NORMAL, style.Color("#1CCD16").get_gdk_color())
+            elif self.x1=='self.button4':
+                self.button4.set_label(str(self.x3))
+                self.button4.modify_bg(Gtk.StateType.NORMAL, style.Color("#1CCD16").get_gdk_color())
+            elif self.x1=='self.button5':
+                self.button5.set_label(str(self.x3))
+                self.button5.modify_bg(Gtk.StateType.NORMAL, style.Color("#1CCD16").get_gdk_color())
+            elif self.x1=='self.button6':
+                self.button6.set_label(str(self.x3))
+                self.button6.modify_bg(Gtk.StateType.NORMAL, style.Color("#1CCD16").get_gdk_color())
+            elif self.x1=='self.button7':
+                self.button7.set_label(str(self.x3))
+                self.button7.modify_bg(Gtk.StateType.NORMAL, style.Color("#1CCD16").get_gdk_color())
+            elif self.x1=='self.button8':
+                self.button8.set_label(str(self.x3))
+                self.button8.modify_bg(Gtk.StateType.NORMAL, style.Color("#1CCD16").get_gdk_color())
+            else:
+                self.button9.set_label(str(self.x3))
+                self.button9.modify_bg(Gtk.StateType.NORMAL, style.Color("#1CCD16").get_gdk_color())
+            self.click=0
+            self.fila1=int(self.button1.get_label()) + int(self.button2.get_label()) + int(self.button3.get_label())
+            self.fila2=int(self.button4.get_label()) + int(self.button5.get_label()) + int(self.button6.get_label())
+            self.fila3=int(self.button7.get_label()) + int(self.button8.get_label()) + int(self.button9.get_label())
+            self.columna1=int(self.button1.get_label()) + int(self.button4.get_label()) + int(self.button7.get_label())
+            self.columna2=int(self.button2.get_label()) + int(self.button5.get_label()) + int(self.button8.get_label())
+            self.columna3=int(self.button3.get_label()) + int(self.button6.get_label()) + int(self.button9.get_label())
+            self.diagonal1=int(self.button1.get_label()) + int(self.button5.get_label()) + int(self.button9.get_label())
+            self.diagonal2=int(self.button7.get_label()) + int(self.button5.get_label()) + int(self.button3.get_label())
+    
+        if self.nivel==1 and self.fila1==15 and self.fila2==15 and self.fila3==15:
+            nivel.set_text('Nivel 2: \n'
+                'Haz que todos los numeros alineados en forma vertical y horizontal sumen 15!!!')
+            felicitaciones.set_visible(True)
+            self.nivel+=1
+            self.click=0
+            self.cargar_botones()
+        elif self.nivel==2 and self.fila1==15 and self.fila2==15 and self.fila3==15 and self.columna1==15 and self.columna2==15 and self.columna3==15:
+            nivel.set_text('Nivel 3: \n'
+                'Haz que todos los numeros alineados en forma vertical, horizontal y diagonal sumen 15!!!')
+            felicitaciones.set_text('Excelente lograste el nivel 2 prueba resolviendo el nivel 3!!!')
+            self.nivel+=1
+            self.click=0
+            self.cargar_botones()
+        elif self.nivel==3 and self.fila1==15 and self.fila2==15 and self.fila3==15 and self.columna1==15 and self.columna2==15 and self.columna3==15 and self.diagonal1==15 and self.diagonal2==15:
+            felicitaciones.set_text('Excelente lograste el nivel 3')
