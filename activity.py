@@ -74,30 +74,6 @@ class CadradoMagicoActivity(activity.Activity):
         event_box = Gtk.EventBox()
         event_box.modify_bg(Gtk.StateType.NORMAL, 
                             style.Color('#FFFFFF').get_gdk_color())
-        win = Gtk.VBox()
-        menu = Gtk.VButtonBox()
-        menu.set_layout(Gtk.ButtonBoxStyle.CENTER)
-        jugar = Gtk.Button('Jugar')
-        jugar.modify_bg(Gtk.StateType.NORMAL,
-                            style.Color("#FF2525").get_gdk_color())
-        jugar.set_size_request(250, 150)
-        ayuda = Gtk.Button('Ayuda')
-        ayuda.set_size_request(250, 150)
-        jugar.modify_bg(Gtk.StateType.PRELIGHT, 
-                        style.Color("#FF5A5A").get_gdk_color())
-        ayuda.modify_bg(Gtk.StateType.NORMAL, 
-                        style.Color("#12DE03").get_gdk_color())
-        ayuda.modify_bg(Gtk.StateType.PRELIGHT, 
-                        style.Color("#54DA4A").get_gdk_color())
-        acerca = Gtk.Button('Creditos')
-        acerca.set_size_request(250, 150)
-        acerca.modify_bg(Gtk.StateType.NORMAL, 
-                           style.Color("#FFEF06").get_gdk_color())
-        acerca.modify_bg(Gtk.StateType.PRELIGHT, 
-                            style.Color("#FFF666").get_gdk_color())
-        menu.add(jugar)
-        menu.add(ayuda)
-        menu.add(acerca)
         juego = Gtk.VBox()
         label = Gtk.Label('Cuadro Magico')
         nivel = Gtk.Label('Nivel 1: \n'
@@ -147,9 +123,6 @@ class CadradoMagicoActivity(activity.Activity):
                                 style.Color("#1CCD16").get_gdk_color())
         hbox4 = Gtk.HButtonBox()
         hbox4.set_layout(Gtk.ButtonBoxStyle.CENTER)
-        volver = Gtk.Button('Volver')
-        volver.modify_bg(Gtk.StateType.NORMAL, 
-                                style.Color("#FF2525").get_gdk_color())
         felicitaciones=Gtk.Label('Excelente lograste el nivel 1 prueba resolviendo el nivel 2!!!')
 
         self.sumat=0
@@ -175,8 +148,6 @@ class CadradoMagicoActivity(activity.Activity):
             
         self.cargar_botones()
 
-        jugar.connect("clicked",self.jugar, menu, juego, felicitaciones)
-        volver.connect("clicked",self.menu, menu, juego)
         self.button1.connect("clicked",self.cambiar, nivel, felicitaciones, 'self.button1')
         self.button2.connect("clicked",self.cambiar, nivel, felicitaciones, 'self.button2')
         self.button3.connect("clicked",self.cambiar, nivel, felicitaciones, 'self.button3')
@@ -188,15 +159,7 @@ class CadradoMagicoActivity(activity.Activity):
         self.button9.connect("clicked",self.cambiar, nivel, felicitaciones, 'self.button9')
 
         self.set_canvas(event_box)
-        event_box.add(win)
-        #Primera ventana
-        win.add(menu)
-        menu.add(jugar)
-        menu.add(ayuda)
-        menu.add(acerca)
-
-        #Segunda ventana
-        win.add(juego)
+        event_box.add(juego)
         juego.add(label)
         juego.add(nivel)
         juego.add(hbox1)
@@ -212,12 +175,10 @@ class CadradoMagicoActivity(activity.Activity):
         hbox3.add(self.button8)
         hbox3.add(self.button9)
         juego.add(hbox4)
-        hbox4.add(volver)
         juego.add(felicitaciones)
 
         #Visibilidad de ventanas
         event_box.show_all()
-        juego.set_visible(False)
 
     def cargar_botones(self):
         self.x= random.randint(1,9)
@@ -392,15 +353,6 @@ class CadradoMagicoActivity(activity.Activity):
             self.button7.set_label(str(self.g))
             self.button8.set_label(str(self.h))
             self.button9.set_label(str(self.i))
-
-    def jugar(self, widget, menu=None, juego=None, felicitaciones=None):
-        menu.set_visible(False)
-        juego.set_visible(True)
-        felicitaciones.set_visible(False)
-
-    def menu(self, widget, menu=None, juego=None):
-        menu.set_visible(True)
-        juego.set_visible(False)
 
     def cambiar(self, widget, nivel=None, felicitaciones=None ,Data=None):
         self.click+=1
