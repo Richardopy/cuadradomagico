@@ -77,7 +77,7 @@ class CadradoMagicoActivity(activity.Activity):
         juego = Gtk.VBox()
         label = Gtk.Label('Cuadro Magico')
         nivel = Gtk.Label('Nivel 1: \n'
-                        'Haz que todos los numeros alineados horizontalmente sumen 15!!!')
+                        'Haz que la primera columna sume 15!!!')
         hbox1 = Gtk.HButtonBox()
         hbox1.set_layout(Gtk.ButtonBoxStyle.CENTER)
         event_box = Gtk.EventBox()  
@@ -400,19 +400,19 @@ class CadradoMagicoActivity(activity.Activity):
             self.diagonal1=int(self.button1.get_label()) + int(self.button5.get_label()) + int(self.button9.get_label())
             self.diagonal2=int(self.button7.get_label()) + int(self.button5.get_label()) + int(self.button3.get_label())
     
-        if self.nivel==1 and self.fila1==15 and self.fila2==15 and self.fila3==15:
+        if self.nivel==1 and self.columna1==15:
             nivel.set_text('Nivel 2: \n'
-                'Haz que todos los numeros alineados en forma vertical y horizontal sumen 15!!!')
+                'Haz que las dos primeras columnas sumen 15 cada una!!!')
             felicitaciones.set_visible(True)
             self.nivel+=1
             self.click=0
             self.cargar_botones()
-        elif self.nivel==2 and self.fila1==15 and self.fila2==15 and self.fila3==15 and self.columna1==15 and self.columna2==15 and self.columna3==15:
+        elif self.nivel==2 and self.columna1==15 and self.columna2==15:
             nivel.set_text('Nivel 3: \n'
-                'Haz que todos los numeros alineados en forma vertical, horizontal y diagonal sumen 15!!!')
+                'Haz que las tres columnas sumen 15 cada una!!!')
             felicitaciones.set_text('Excelente lograste el nivel 2 prueba resolviendo el nivel 3!!!')
             self.nivel+=1
             self.click=0
             self.cargar_botones()
-        elif self.nivel==3 and self.fila1==15 and self.fila2==15 and self.fila3==15 and self.columna1==15 and self.columna2==15 and self.columna3==15 and self.diagonal1==15 and self.diagonal2==15:
+        elif self.nivel==3 and self.columna1==15 and self.columna2==15 and self.columna3==15:
             felicitaciones.set_text('Excelente lograste el nivel 3')

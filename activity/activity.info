@@ -3,5 +3,5 @@ name = Cadrado Mágico
 activity_version = 1
 bundle_id = org.sugarlabs.CadradoMagico
 exec = sugar-activity activity.CadradoMagicoActivity
-icon = icono
+icon = activity-helloworld
 license = GPLv2+
