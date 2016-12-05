@@ -78,62 +78,32 @@ class CadradoMagicoActivity(activity.Activity):
         label = Gtk.Label('Cuadro Magico')
         nivel = Gtk.Label('Nivel 1: \n'
                         'Haz que la primera columna sume 15!!!')
+
         hbox1 = Gtk.HButtonBox()
         hbox1.set_layout(Gtk.ButtonBoxStyle.CENTER)
-        event_box = Gtk.EventBox()  
-        self.button1 = Gtk.Button()
-        self.button1.set_size_request(150, 150)
-        self.button1.modify_bg(Gtk.StateType.NORMAL, 
-                                style.Color("#1CCD16").get_gdk_color())
-        self.button2 = Gtk.Button()
-        self.button2.set_size_request(150, 150)
-        self.button2.modify_bg(Gtk.StateType.NORMAL, 
-                                style.Color("#1CCD16").get_gdk_color())
-        self.button3 = Gtk.Button()
-        self.button3.set_size_request(150, 150)
-        self.button3.modify_bg(Gtk.StateType.NORMAL, 
-                                style.Color("#1CCD16").get_gdk_color())
         hbox2 = Gtk.HButtonBox()
         hbox2.set_layout(Gtk.ButtonBoxStyle.CENTER)
-        self.button4 = Gtk.Button()
-        self.button4.set_size_request(150, 150)
-        self.button4.modify_bg(Gtk.StateType.NORMAL, 
-                                style.Color("#1CCD16").get_gdk_color())
-        self.button5 = Gtk.Button()
-        self.button5.set_size_request(150, 150)
-        self.button5.modify_bg(Gtk.StateType.NORMAL, 
-                                style.Color("#1CCD16").get_gdk_color())
-        self.button6 = Gtk.Button()
-        self.button6.set_size_request(150, 150)
-        self.button6.modify_bg(Gtk.StateType.NORMAL, 
-                                style.Color("#1CCD16").get_gdk_color())
         hbox3 = Gtk.HButtonBox()
         hbox3.set_layout(Gtk.ButtonBoxStyle.CENTER)
-        self.button7 = Gtk.Button()
-        self.button7.set_size_request(150, 150)
-        self.button7.modify_bg(Gtk.StateType.NORMAL, 
-                                style.Color("#1CCD16").get_gdk_color())
-        self.button8 = Gtk.Button()
-        self.button8.set_size_request(150, 150)
-        self.button8.modify_bg(Gtk.StateType.NORMAL, 
-                                style.Color("#1CCD16").get_gdk_color())
-        self.button9 = Gtk.Button()
-        self.button9.set_size_request(150, 150)
-        self.button9.modify_bg(Gtk.StateType.NORMAL, 
-                                style.Color("#1CCD16").get_gdk_color())
         hbox4 = Gtk.HButtonBox()
         hbox4.set_layout(Gtk.ButtonBoxStyle.CENTER)
-        felicitaciones=Gtk.Label('Excelente lograste el nivel 1 prueba resolviendo el nivel 2!!!')
 
-        self.sumat=0
-        self.sumaf1=0
-        self.sumaf2=0
-        self.sumaf3=0
-        self.sumac1=0
-        self.sumac2=0
-        self.sumac3=0
-        self.sumad1=0
-        self.sumad2=0
+        event_box = Gtk.EventBox()
+
+        self.botones = []
+        while len(self.botones) < 9:
+            boton = Gtk.Button()
+            boton.set_size_request(150, 150)
+            boton.modify_bg(Gtk.StateType.NORMAL, style.Color("#1CCD16").get_gdk_color())
+            self.botones.append(boton)
+
+        felicitaciones = Gtk.Label('Excelente lograste el nivel 1 prueba resolviendo el nivel 2!!!')
+
+        boton_id = 0
+        for boton in self.botones:
+            boton.connect("clicked", self.cambiar, nivel, felicitaciones)
+            boton_id += 1
+
         self.click=0
         self.x3=0
         self.nivel=1
@@ -148,32 +118,26 @@ class CadradoMagicoActivity(activity.Activity):
             
         self.cargar_botones()
 
-        self.button1.connect("clicked",self.cambiar, nivel, felicitaciones, 'self.button1')
-        self.button2.connect("clicked",self.cambiar, nivel, felicitaciones, 'self.button2')
-        self.button3.connect("clicked",self.cambiar, nivel, felicitaciones, 'self.button3')
-        self.button4.connect("clicked",self.cambiar, nivel, felicitaciones, 'self.button4')
-        self.button5.connect("clicked",self.cambiar, nivel, felicitaciones, 'self.button5')
-        self.button6.connect("clicked",self.cambiar, nivel, felicitaciones, 'self.button6')
-        self.button7.connect("clicked",self.cambiar, nivel, felicitaciones, 'self.button7')
-        self.button8.connect("clicked",self.cambiar, nivel, felicitaciones, 'self.button8')
-        self.button9.connect("clicked",self.cambiar, nivel, felicitaciones, 'self.button9')
-
         self.set_canvas(event_box)
         event_box.add(juego)
+
+        hbox1.add(self.botones[0])
+        hbox1.add(self.botones[1])
+        hbox1.add(self.botones[2])
+
+        hbox2.add(self.botones[3])
+        hbox2.add(self.botones[4])
+        hbox2.add(self.botones[5])
+
+        hbox3.add(self.botones[6])
+        hbox3.add(self.botones[7])
+        hbox3.add(self.botones[8])
+
         juego.add(label)
         juego.add(nivel)
         juego.add(hbox1)
-        hbox1.add(self.button1)
-        hbox1.add(self.button2)
-        hbox1.add(self.button3)
         juego.add(hbox2)
-        hbox2.add(self.button4)
-        hbox2.add(self.button5)
-        hbox2.add(self.button6)
         juego.add(hbox3)
-        hbox3.add(self.button7)
-        hbox3.add(self.button8)
-        hbox3.add(self.button9)
         juego.add(hbox4)
         juego.add(felicitaciones)
 
@@ -181,224 +145,36 @@ class CadradoMagicoActivity(activity.Activity):
         event_box.show_all()
 
     def cargar_botones(self):
-        self.x= random.randint(1,9)
-        if self.x==1:
-            self.a=self.x+5
-            self.b=self.x+3 
-            self.c=self.x+4
-            self.d=self.x
-            self.e=self.x+7
-            self.f=self.x+8
-            self.g=self.x+1
-            self.h=self.x+2
-            self.i=self.x+6
-            self.button1.set_label(str(self.a))
-            self.button2.set_label(str(self.b))
-            self.button3.set_label(str(self.c))
-            self.button4.set_label(str(self.d))
-            self.button5.set_label(str(self.e))
-            self.button6.set_label(str(self.f))
-            self.button7.set_label(str(self.g))
-            self.button8.set_label(str(self.h))
-            self.button9.set_label(str(self.i))
-        elif self.x==2:      
-            self.a=self.x-1
-            self.b=self.x+3
-            self.c=self.x+5
-            self.d=self.x+4
-            self.e=self.x+6
-            self.f=self.x+7
-            self.g=self.x
-            self.h=self.x+2
-            self.i=self.x+1
-            self.button1.set_label(str(self.a))
-            self.button2.set_label(str(self.b))
-            self.button3.set_label(str(self.c))
-            self.button4.set_label(str(self.d))
-            self.button5.set_label(str(self.e))
-            self.button6.set_label(str(self.f))
-            self.button7.set_label(str(self.g))
-            self.button8.set_label(str(self.h))
-            self.button9.set_label(str(self.i))
-        elif self.x==3:
-            self.a=self.x-1
-            self.b=self.x+3
-            self.c=self.x+5 
-            self.d=self.x+4
-            self.e=self.x+6
-            self.f=self.x-2
-            self.g=self.x
-            self.h=self.x+2
-            self.i=self.x+1
-            self.button1.set_label(str(self.a))
-            self.button2.set_label(str(self.b))
-            self.button3.set_label(str(self.c))
-            self.button4.set_label(str(self.d))
-            self.button5.set_label(str(self.e))
-            self.button6.set_label(str(self.f))
-            self.button7.set_label(str(self.g))
-            self.button8.set_label(str(self.h))
-            self.button9.set_label(str(self.i))
-        elif self.x==4:
-            self.a=self.x-1
-            self.b=self.x+3
-            self.c=self.x+5
-            self.d=self.x+4
-            self.e=self.x-2
-            self.f=self.x-3
-            self.g=self.x
-            self.h=self.x+2
-            self.i=self.x+1
-            self.button1.set_label(str(self.a))
-            self.button2.set_label(str(self.b))
-            self.button3.set_label(str(self.c))
-            self.button4.set_label(str(self.d))
-            self.button5.set_label(str(self.e))
-            self.button6.set_label(str(self.f))
-            self.button7.set_label(str(self.g))
-            self.button8.set_label(str(self.h))
-            self.button9.set_label(str(self.i))
-        elif self.x==5:
-            self.a=self.x-1
-            self.b=self.x+3
-            self.c=self.x+2
-            self.d=self.x+4
-            self.e=self.x-4
-            self.f=self.x-3
-            self.g=self.x
-            self.h=self.x-2
-            self.i=self.x+1
-            self.button1.set_label(str(self.a))
-            self.button2.set_label(str(self.b))
-            self.button3.set_label(str(self.c))
-            self.button4.set_label(str(self.d))
-            self.button5.set_label(str(self.e))
-            self.button6.set_label(str(self.f))
-            self.button7.set_label(str(self.g))
-            self.button8.set_label(str(self.h))
-            self.button9.set_label(str(self.i))
-        elif self.x==6:
-            self.a=self.x-1
-            self.b=self.x+3
-            self.c=self.x-2
-            self.d=self.x-5
-            self.e=self.x-3
-            self.f=self.x-4
-            self.g=self.x
-            self.h=self.x+2
-            self.i=self.x+1
-            self.button1.set_label(str(self.a))
-            self.button2.set_label(str(self.b))
-            self.button3.set_label(str(self.c))
-            self.button4.set_label(str(self.d))
-            self.button5.set_label(str(self.e))
-            self.button6.set_label(str(self.f))
-            self.button7.set_label(str(self.g))
-            self.button8.set_label(str(self.h))
-            self.button9.set_label(str(self.i))                   
-        elif self.x==7:
-            self.a=self.x-1
-            self.b=self.x+2
-            self.c=self.x-5
-            self.d=self.x-6
-            self.e=self.x-3
-            self.f=self.x-4
-            self.g=self.x
-            self.h=self.x-2
-            self.i=self.x+1
-            self.button1.set_label(str(self.a))
-            self.button2.set_label(str(self.b))
-            self.button3.set_label(str(self.c))
-            self.button4.set_label(str(self.d))
-            self.button5.set_label(str(self.e))
-            self.button6.set_label(str(self.f))
-            self.button7.set_label(str(self.g))
-            self.button8.set_label(str(self.h))
-            self.button9.set_label(str(self.i))
-        elif self.x==8:
-            self.a=self.x-1
-            self.b=self.x+1
-            self.c=self.x-2
-            self.d=self.x-5
-            self.e=self.x-3
-            self.f=self.x-4
-            self.g=self.x
-            self.h=self.x-7
-            self.i=self.x-6
-            self.button1.set_label(str(self.a))
-            self.button2.set_label(str(self.b))
-            self.button3.set_label(str(self.c))
-            self.button4.set_label(str(self.d))
-            self.button5.set_label(str(self.e))
-            self.button6.set_label(str(self.f))
-            self.button7.set_label(str(self.g))
-            self.button8.set_label(str(self.h))
-            self.button9.set_label(str(self.i))
-        else:
-            self.a=self.x
-            self.b=self.x-7
-            self.c=self.x-2
-            self.d=self.x-4
-            self.e=self.x-1
-            self.f=self.x-5
-            self.g=self.x-6
-            self.h=self.x-3
-            self.i=self.x-8
-            self.button1.set_label(str(self.a))
-            self.button2.set_label(str(self.b))
-            self.button3.set_label(str(self.c))
-            self.button4.set_label(str(self.d))
-            self.button5.set_label(str(self.e))
-            self.button6.set_label(str(self.f))
-            self.button7.set_label(str(self.g))
-            self.button8.set_label(str(self.h))
-            self.button9.set_label(str(self.i))
+        numeros = []
+        boton_id = 0
+        while len(numeros) < 9:
+            x = random.randint(1,9)
+            if x in numeros:
+                continue
+            numeros.append(x)
+            self.botones[boton_id].set_label(str(x))
+            boton_id += 1
 
-    def cambiar(self, widget, nivel=None, felicitaciones=None ,Data=None):
+    def cambiar(self, widget, nivel=None, felicitaciones=None):
         self.click+=1
         if self.click==1:
-            self.x1=Data
-            self.x2=widget.get_label()
+	    self.first_press = widget
             widget.modify_bg(Gtk.StateType.NORMAL, style.Color("#F20000").get_gdk_color())
         else:
-            self.x3=widget.get_label()
-            widget.set_label(self.x2)
-            if self.x1=='self.button1':
-                self.button1.set_label(str(self.x3))
-                self.button1.modify_bg(Gtk.StateType.NORMAL, style.Color("#1CCD16").get_gdk_color())
-            elif self.x1=='self.button2':
-                self.button2.set_label(str(self.x3))
-                self.button2.modify_bg(Gtk.StateType.NORMAL, style.Color("#1CCD16").get_gdk_color())
-            elif self.x1=='self.button3':
-                self.button3.set_label(str(self.x3))
-                self.button3.modify_bg(Gtk.StateType.NORMAL, style.Color("#1CCD16").get_gdk_color())
-            elif self.x1=='self.button4':
-                self.button4.set_label(str(self.x3))
-                self.button4.modify_bg(Gtk.StateType.NORMAL, style.Color("#1CCD16").get_gdk_color())
-            elif self.x1=='self.button5':
-                self.button5.set_label(str(self.x3))
-                self.button5.modify_bg(Gtk.StateType.NORMAL, style.Color("#1CCD16").get_gdk_color())
-            elif self.x1=='self.button6':
-                self.button6.set_label(str(self.x3))
-                self.button6.modify_bg(Gtk.StateType.NORMAL, style.Color("#1CCD16").get_gdk_color())
-            elif self.x1=='self.button7':
-                self.button7.set_label(str(self.x3))
-                self.button7.modify_bg(Gtk.StateType.NORMAL, style.Color("#1CCD16").get_gdk_color())
-            elif self.x1=='self.button8':
-                self.button8.set_label(str(self.x3))
-                self.button8.modify_bg(Gtk.StateType.NORMAL, style.Color("#1CCD16").get_gdk_color())
-            else:
-                self.button9.set_label(str(self.x3))
-                self.button9.modify_bg(Gtk.StateType.NORMAL, style.Color("#1CCD16").get_gdk_color())
+            temp_val=widget.get_label()
+            widget.set_label(self.first_press.get_label())
+            self.first_press.set_label(str(temp_val))
+            self.first_press.modify_bg(Gtk.StateType.NORMAL, style.Color("#1CCD16").get_gdk_color())
+
             self.click=0
-            self.fila1=int(self.button1.get_label()) + int(self.button2.get_label()) + int(self.button3.get_label())
-            self.fila2=int(self.button4.get_label()) + int(self.button5.get_label()) + int(self.button6.get_label())
-            self.fila3=int(self.button7.get_label()) + int(self.button8.get_label()) + int(self.button9.get_label())
-            self.columna1=int(self.button1.get_label()) + int(self.button4.get_label()) + int(self.button7.get_label())
-            self.columna2=int(self.button2.get_label()) + int(self.button5.get_label()) + int(self.button8.get_label())
-            self.columna3=int(self.button3.get_label()) + int(self.button6.get_label()) + int(self.button9.get_label())
-            self.diagonal1=int(self.button1.get_label()) + int(self.button5.get_label()) + int(self.button9.get_label())
-            self.diagonal2=int(self.button7.get_label()) + int(self.button5.get_label()) + int(self.button3.get_label())
+            self.fila1=int(self.botones[0].get_label()) + int(self.botones[1].get_label()) + int(self.botones[2].get_label())
+            self.fila2=int(self.botones[3].get_label()) + int(self.botones[4].get_label()) + int(self.botones[5].get_label())
+            self.fila3=int(self.botones[6].get_label()) + int(self.botones[7].get_label()) + int(self.botones[8].get_label())
+            self.columna1=int(self.botones[0].get_label()) + int(self.botones[3].get_label()) + int(self.botones[6].get_label())
+            self.columna2=int(self.botones[1].get_label()) + int(self.botones[4].get_label()) + int(self.botones[7].get_label())
+            self.columna3=int(self.botones[2].get_label()) + int(self.botones[5].get_label()) + int(self.botones[8].get_label())
+            self.diagonal1=int(self.botones[0].get_label()) + int(self.botones[4].get_label()) + int(self.botones[8].get_label())
+            self.diagonal2=int(self.botones[6].get_label()) + int(self.botones[4].get_label()) + int(self.botones[2].get_label())
     
         if self.nivel==1 and self.columna1==15:
             nivel.set_text('Nivel 2: \n'
@@ -415,4 +191,25 @@ class CadradoMagicoActivity(activity.Activity):
             self.click=0
             self.cargar_botones()
         elif self.nivel==3 and self.columna1==15 and self.columna2==15 and self.columna3==15:
-            felicitaciones.set_text('Excelente lograste el nivel 3')
+            nivel.set_text('Nivel 4: \n'
+                'Haz que las dos primeras columnas y la primera fila sumen 15 cada una!!!')
+            felicitaciones.set_text('Excelente lograste el nivel 3 prueba resolviendo el nivel 4!!!')
+            self.nivel+=1
+            self.click=0
+            self.cargar_botones()
+        elif self.nivel==4 and self.columna1==15 and self.columna2 == 15 and self.fila1 == 15: 
+            nivel.set_text('Nivel 5: \n'
+                'Haz que las tres columnas y las tres filas sumen 15 cada una!!!')
+            felicitaciones.set_text('Excelente lograste el nivel 4 prueba resolviendo el nivel 5!!!')
+            self.nivel+=1
+            self.click=0
+            self.cargar_botones()
+        elif self.nivel==5 and self.columna1==15 and self.columna2 == 15 and self.columna3 == 15 and self.fila1 == 15 and self.fila2 == 15 and self.fila3 == 15:
+            nivel.set_text('Nivel ultimo: \n'
+                'Haz que las tres columnas, las tres filas y las ambas diagonales sumen 15 cada una!!!')
+            felicitaciones.set_text('Excelente lograste el nivel 4 prueba resolviendo el nivel 5!!!')
+            self.nivel+=1
+            self.click=0
+            self.cargar_botones()
+        elif self.nivel==6 and self.columna1 == 15 and self.columna2==15 and self.columna3==15 and self.fila1 == 15 and self.fila2 == 15 and self.fila3 == 15 and self.diagonal1 == 15 and diagonal2 == 15:
+            felicitaciones.set_markup('<span style="color: red"><b>Excelente lograste el nivel ultimo!</b></span>')
