@@ -106,8 +106,8 @@ class CadradoMagicoActivity(activity.Activity):
 
         grid = Gtk.Grid()
         grid.props.halign = Gtk.Align.CENTER
-        grid.set_row_spacing(10)
-        grid.set_column_spacing(10)
+        grid.set_row_spacing(0)
+        grid.set_column_spacing(0)
 
         for x in range(0, 3):
             grid.attach(self.botones[x], x, 0, 1, 1)
