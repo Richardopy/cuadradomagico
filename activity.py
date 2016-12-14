@@ -72,15 +72,6 @@ class CadradoMagicoActivity(activity.Activity):
                         'Haz que la primera columna sume 15!!!')
         nivel.modify_font(Pango.FontDescription("20"))
 
-        hbox1 = Gtk.HButtonBox()
-        hbox1.set_layout(Gtk.ButtonBoxStyle.CENTER)
-        hbox2 = Gtk.HButtonBox()
-        hbox2.set_layout(Gtk.ButtonBoxStyle.CENTER)
-        hbox3 = Gtk.HButtonBox()
-        hbox3.set_layout(Gtk.ButtonBoxStyle.CENTER)
-        hbox4 = Gtk.HButtonBox()
-        hbox4.set_layout(Gtk.ButtonBoxStyle.CENTER)
-
         event_box = Gtk.EventBox()
 
         felicitaciones = Gtk.Label('¡Excelente! Lograste el nivel 1, intenta resolver el nivel 2.')
@@ -113,17 +104,19 @@ class CadradoMagicoActivity(activity.Activity):
         self.set_canvas(event_box)
         event_box.add(juego)
 
+        grid = Gtk.Grid()
+        grid.props.halign = Gtk.Align.CENTER
+        grid.set_row_spacing(10)
+        grid.set_column_spacing(10)
+
         for x in range(0, 3):
-            hbox1.add(self.botones[x])
-            hbox2.add(self.botones[x + 3])
-            hbox3.add(self.botones[x + 6])
+            grid.attach(self.botones[x], x, 0, 1, 1)
+            grid.attach(self.botones[x + 3], x, 1, 1, 1)
+            grid.attach(self.botones[x + 6], x, 2, 1, 1)
 
         juego.add(label)
         juego.add(nivel)
-        juego.add(hbox1)
-        juego.add(hbox2)
-        juego.add(hbox3)
-        juego.add(hbox4)
+        juego.add(grid)
         juego.add(felicitaciones)
 
         #Visibilidad de ventanas
